@@ -1,0 +1,25 @@
+# Data Collection
+snscrape
+praw
+requests
+
+# Data Processing
+pandas
+numpy
+
+# Sentiment Analysis
+nltk
+textblob
+transformers
+
+# Visualization
+matplotlib
+seaborn
+plotly
+wordcloud
+
+# Utilities
+beautifulsoup4
+python-dotenv
+tqdm
+scikit-learn

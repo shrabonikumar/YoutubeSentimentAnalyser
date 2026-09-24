@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iPhone 16 — Sentiment Analysis Report</title>
+<style>
+  :root {
+    --pos: #3B8BD4; --neu: #888780; --neg: #E24B4A;
+    --bg: #F8F9FA; --card: #FFFFFF; --border: #E0E4EA;
+    --text: #1A1A2E; --muted: #6B7280;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg);
+          color: var(--text); padding: 32px 24px; font-size: 14px; }
+  h1   { font-size: 1.9em; font-weight: 700; margin-bottom: 4px; }
+  h2   { font-size: 1.25em; font-weight: 600; margin-bottom: 14px;
+          border-left: 4px solid var(--pos); padding-left: 10px; }
+  h3   { font-size: 1.05em; font-weight: 600; margin-bottom: 8px; color: var(--muted); }
+  p    { line-height: 1.6; color: var(--muted); margin-bottom: 8px; }
+  .meta { color: var(--muted); font-size: 0.85em; margin-bottom: 32px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+           margin-bottom: 28px; }
+  .card { background: var(--card); border: 1px solid var(--border);
+           border-radius: 10px; padding: 20px; }
+  .kpi  { text-align: center; }
+  .kpi .val { font-size: 2.6em; font-weight: 700; display: block; }
+  .kpi .lbl { font-size: 0.82em; color: var(--muted); }
+  .pos { color: var(--pos); } .neg { color: var(--neg); } .neu { color: var(--neu); }
+  .section { margin-bottom: 36px; }
+  .card.wide { grid-column: 1 / -1; }
+
+  /* Stacked topic bars */
+  .topic-row  { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .topic-name { width: 200px; font-size: 0.85em; flex-shrink: 0; }
+  .bar-wrap   { flex: 1; display: flex; height: 18px; border-radius: 4px;
+                 overflow: hidden; background: #eee; }
+  .bar-pos    { background: var(--pos); }
+  .bar-neu    { background: var(--neu); }
+  .bar-neg    { background: var(--neg); }
+  .bar-label  { width: 130px; font-size: 0.78em; color: var(--muted);
+                 text-align: right; flex-shrink: 0; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 0.83em; }
+  th    { background: #EEF2F8; text-align: left; padding: 8px 10px;
+           font-weight: 600; color: var(--muted); }
+  td    { padding: 8px 10px; border-bottom: 1px solid var(--border);
+           vertical-align: top; line-height: 1.4; }
+  .tag  { background: #EEF2F8; border-radius: 4px; padding: 2px 7px;
+           font-size: 0.78em; white-space: nowrap; }
+
+  /* Q-blocks */
+  .q-block { background: var(--card); border: 1px solid var(--border);
+              border-radius: 10px; padding: 22px; margin-bottom: 20px; }
+  .q-block h2 { margin-bottom: 10px; }
+  ul { margin-left: 18px; } li { margin-bottom: 6px; line-height: 1.5; }
+
+  /* Keyword chips */
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .chip  { padding: 4px 12px; border-radius: 20px; font-size: 0.80em;
+            background: #EEF2F8; color: var(--text); }
+  .chip.neg { background: #FDE8E8; color: var(--neg); }
+  .chip.pos { background: #E5F1FB; color: var(--pos); }
+
+  footer { text-align: center; color: var(--muted); font-size: 0.78em;
+            margin-top: 40px; border-top: 1px solid var(--border); padding-top: 16px; }
+</style>
+</head>
+<body>
+
+<h1>📱 iPhone 16 — Public Sentiment Analysis</h1>
+<p class="meta">Generated : 19 Apr 2026, 03:08 &nbsp;|&nbsp; Pipeline : preprocess → sentiment → model → topics → report &nbsp;|&nbsp; n = 1,252 comments</p>
+
+<!-- ── KPI Row ── -->
+<div class="grid">
+  <div class="card kpi">
+    <span class="val pos">32.1%</span>
+    <span class="lbl">Positive</span>
+  </div>
+  <div class="card kpi">
+    <span class="val neu">52.5%</span>
+    <span class="lbl">Neutral</span>
+  </div>
+  <div class="card kpi">
+    <span class="val neg">15.4%</span>
+    <span class="lbl">Negative</span>
+  </div>
+</div>
+
+<!-- ── Dashboard image ── -->
+<div class="section">
+  <div class="card">
+    <h2>Full Analysis Dashboard</h2>
+    <img src="dashboard.png" alt="Full Analysis Dashboard" style="width: 100%; height: auto; border-radius: 8px; margin-top: 12px;">
+  </div>
+</div>
+
+<!-- ── Q1 ── -->
+<div class="q-block section">
+  <h2>Q1 — What is the overall public sentiment?</h2>
+  <!-- <p>
+    Public sentiment for the iPhone 16 is <strong style="color:#2E7CC4">Slightly Positive</strong>.
+    Out of 1,252 comments analysed,
+    <strong class="pos">32.1%</strong> are positive,
+    <strong class="neu">52.5%</strong> neutral, and
+    <strong class="neg">15.4%</strong> negative.
+    The majority of users are happy with the device, though a meaningful minority raise concerns.
+  </p> -->
+  <p>
+  Public sentiment for the iPhone 16 is <strong style="color:#2E7CC4">Slightly Positive</strong>.
+  Out of 1,252 comments analysed,
+  <strong class="pos">32.1%</strong> are positive,
+  <strong class="neu">52.5%</strong> neutral, and
+  <strong class="neg">15.4%</strong> negative.
+
+  From a business analytics perspective, while a meaningful portion of users are satisfied, 
+  the largest segment remains neutral. This represents a major opportunity: these users are not dissatisfied, 
+  but they are not yet strong brand advocates. Additionally, the negative segment highlights specific issues 
+  that must be addressed to avoid long-term reputational risks.
+</p>
+</div>
+
+<!-- ── Q2 ── -->
+<div class="q-block section">
+  <h2>Q2 — What are the key issues or positive drivers?</h2>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:16px;">
+    <div>
+      <h3>🔴 Top Complaint Topics</h3>
+      <ul><li><strong>Performance & Speed</strong> — 25.9% negative</li><li><strong>Display & Design</strong> — 18.5% negative</li><li><strong>Price & Value</strong> — 18.1% negative</li></ul>
+    </div>
+    <div>
+      <h3>🔵 Top Positive Drivers</h3>
+      <ul><li><strong>Camera & Photography</strong> — 48.9% positive</li><li><strong>Software & iOS</strong> — 42.2% positive</li><li><strong>Display & Design</strong> — 29.6% positive</li></ul>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:12px;">Sentiment Breakdown by Topic</h3>
+  <div style="padding:4px 0 0 4px;">
+    <div style="display:flex; gap:16px; font-size:0.8em; margin-bottom:8px; color:var(--muted);">
+      <span>■ <span class="pos">Positive</span></span>
+      <span>■ <span class="neu">Neutral</span></span>
+      <span>■ <span class="neg">Negative</span></span>
+    </div>
+    
+        <div class="topic-row">
+          <div class="topic-name">Battery & Charging</div>
+          <div class="bar-wrap">
+            <div class="bar-pos" style="width:23.1%" title="Positive 23.1%"></div>
+            <div class="bar-neu" style="width:65.9%" title="Neutral 65.9%"></div>
+            <div class="bar-neg" style="width:11.0%" title="Negative 11.0%"></div>
+          </div>
+          <div class="bar-label">23% pos / 11% neg</div>
+        </div>
+        <div class="topic-row">
+          <div class="topic-name">Camera & Photography</div>
+          <div class="bar-wrap">
+            <div class="bar-pos" style="width:48.9%" title="Positive 48.9%"></div>
+            <div class="bar-neu" style="width:47.8%" title="Neutral 47.8%"></div>
+            <div class="bar-neg" style="width:3.3%" title="Negative 3.3%"></div>
+          </div>
+          <div class="bar-label">49% pos / 3% neg</div>
+        </div>
+        <div class="topic-row">
+          <div class="topic-name">Display & Design</div>
+          <div class="bar-wrap">
+            <div class="bar-pos" style="width:29.6%" title="Positive 29.6%"></div>
+            <div class="bar-neu" style="width:51.9%" title="Neutral 51.9%"></div>
+            <div class="bar-neg" style="width:18.5%" title="Negative 18.5%"></div>
+          </div>
+          <div class="bar-label">30% pos / 19% neg</div>
+        </div>
+        <div class="topic-row">
+          <div class="topic-name">Performance & Speed</div>
+          <div class="bar-wrap">
+            <div class="bar-pos" style="width:29.2%" title="Positive 29.2%"></div>
+            <div class="bar-neu" style="width:44.8%" title="Neutral 44.8%"></div>
+            <div class="bar-neg" style="width:25.9%" title="Negative 25.9%"></div>
+          </div>
+          <div class="bar-label">29% pos / 26% neg</div>
+        </div>
+        <div class="topic-row">
+          <div class="topic-name">Price & Value</div>
+          <div class="bar-wrap">
+            <div class="bar-pos" style="width:14.5%" title="Positive 14.5%"></div>
+            <div class="bar-neu" style="width:67.4%" title="Neutral 67.4%"></div>
+            <div class="bar-neg" style="width:18.1%" title="Negative 18.1%"></div>
+          </div>
+          <div class="bar-label">15% pos / 18% neg</div>
+        </div>
+        <div class="topic-row">
+          <div class="topic-name">Software & iOS</div>
+          <div class="bar-wrap">
+            <div class="bar-pos" style="width:42.2%" title="Positive 42.2%"></div>
+            <div class="bar-neu" style="width:50.2%" title="Neutral 50.2%"></div>
+            <div class="bar-neg" style="width:7.6%" title="Negative 7.6%"></div>
+          </div>
+          <div class="bar-label">42% pos / 8% neg</div>
+        </div>
+  </div>
+  <h3 style="margin-top:16px;">Analytical Insights</h3>
+<p>
+  The <strong>Camera & Photography</strong> feature emerges as the strongest competitive advantage 
+  (48.9% positive, only 3.3% negative), indicating strong user satisfaction with technical improvements.
+</p>
+<p>
+  However, <strong>Performance & Speed</strong> is the most critical issue (25.9% negative), 
+  with complaints often tied to real-world usability such as connectivity and optimization.
+</p>
+<p>
+  Additionally, <strong>Price & Value</strong> and <strong>Display & Design</strong> concerns 
+  indicate that users question whether the upgrade justifies the cost, especially for smaller models.
+</p>
+<p>
+  Frequently occurring negative keywords such as <em>battery, screen, upgrade, price</em> 
+  highlight dissatisfaction with core product value.
+</p>
+
+  <h3 style="margin:14px 0 8px;">Top negative keywords</h3>
+  <div class="chips"><span class="chip neg">not</span> <span class="chip neg">iphone</span> <span class="chip neg">phone</span> <span class="chip neg">pro</span> <span class="chip neg">face</span> <span class="chip neg">get</span> <span class="chip neg">use</span> <span class="chip neg">battery</span> <span class="chip neg">camera</span> <span class="chip neg">apple</span> <span class="chip neg">new</span> <span class="chip neg">really</span> <span class="chip neg">upgrade</span> <span class="chip neg">screen</span> <span class="chip neg">well</span></div>
+
+  <h3 style="margin:14px 0 8px;">Top positive keywords</h3>
+  <div class="chips"><span class="chip pos">iphone</span> <span class="chip pos">pro</span> <span class="chip pos">face</span> <span class="chip pos">phone</span> <span class="chip pos">tear</span> <span class="chip pos">joy</span> <span class="chip pos">upgrade</span> <span class="chip pos">good</span> <span class="chip pos">get</span> <span class="chip pos">camera</span> <span class="chip pos">not</span> <span class="chip pos">max</span> <span class="chip pos">love</span> <span class="chip pos">smile</span> <span class="chip pos">plus</span></div>
+</div>
+
+<!-- ── Q3 ── -->
+<div class="q-block section">
+  <h2>Q3 — How can businesses improve products / services?</h2>
+  <!-- <ul>
+    <li>Address the highest-negative topics first — these represent the loudest, most pressing user pain points.</li>
+    <li>Use verbatim complaints below to understand <em>exactly</em> what language users use when they're unhappy — these map directly to product team action items.</li>
+    <li>Topics that are both <strong>high-volume</strong> and <strong>high-negative</strong> (bottom-left of the Priority Matrix) require immediate engineering attention.</li>
+    <li>Neutral topics are an opportunity: even a small UX improvement can tip them into positive territory and boost overall NPS.</li>
+    <li>Compare negative keyword frequency month-over-month; a declining trend validates that product fixes are working.</li>
+  </ul> -->
+  <ul>
+  <li><strong>Prioritise high-negative topics:</strong> Focus engineering efforts on Performance & Speed and Display issues to reduce churn.</li>
+
+  <li><strong>Use verbatim feedback:</strong> Extract exact user complaints (e.g., battery life, connectivity issues, 60Hz display concerns) to guide feature improvements.</li>
+
+  <li><strong>Convert the neutral majority:</strong> With 52.5% neutral users, small UX improvements (especially in iOS experience) can significantly increase positive sentiment.</li>
+
+  <li><strong>Track keyword trends:</strong> Monitor negative keywords such as “battery” and “bug” over time to validate product improvements.</li>
+
+  <li><strong>Adopt data-driven iteration:</strong> Use continuous sentiment tracking to align product updates with real user needs.</li>
+</ul>
+
+  <h3 style="margin:16px 0 8px;">Representative negative comments</h3>
+  <table>
+    <thead><tr><th>Topic</th><th></th><th>Comment</th></tr></thead>
+    <tbody>
+            <tr>
+              <td><span class="tag">Performance & Speed</span></td>
+              <td style="color:#E24B4A">▼</td>
+              <td>A lot of the comments here are missing the point of this phone. It’s not suposed to be ground breaking technology it’s a phone that has some decent features and can be had for a lower price than the current up to date other offerings from Apple and an improvement over the se. No …</td>
+            </tr>
+            <tr>
+              <td><span class="tag">Price & Value</span></td>
+              <td style="color:#E24B4A">▼</td>
+              <td>I have the 16 Plus in Ultramarine and the plus model of the battery legit lasts me 1.5 to 2 days. I got it on launch day and iOS 18 had quite a few issues in the beginning but the bugs are going away- never been bad enough to affect performance. I’m a basic user, no gaming, tons …</td>
+            </tr>
+            <tr>
+              <td><span class="tag">Price & Value</span></td>
+              <td style="color:#E24B4A">▼</td>
+              <td>Get the plus version of this phone over the iPhone 17. The iPhone 17 is phenomenal however, as with all iPhone 6.1 inch models, battery life is a tragedy. The iPhone 16 plus has a larger battery and its panel is only 60Hz. What kills your battery the most when using your phone? i…</td>
+            </tr>
+            <tr>
+              <td><span class="tag">Performance & Speed</span></td>
+              <td style="color:#E24B4A">▼</td>
+              <td>If you’re thinking about getting the iPhone 16, just go for it. There’s no point in giving a kid an iPhone 15 Pro or Pro Max with Apple Intelligence—it’s overkill, and the phone itself is far too big for their hands. Most people upgrade to the latest Apple products anyway, so it …</td>
+            </tr>
+            <tr>
+              <td><span class="tag">Performance & Speed</span></td>
+              <td style="color:#E24B4A">▼</td>
+              <td>Wish it was cheaper of course, but all things considered a good step from my 2020 SE. Things not mentioned here, and elsewhere as far as I can tell, is that unlike those who somehow think that everyone everywhere has reliable cell signal, they are wrong... I'm not that far from t…</td>
+            </tr>
+            <tr>
+              <td><span class="tag">Performance & Speed</span></td>
+              <td style="color:#E24B4A">▼</td>
+              <td>Yesterday I couldn’t get the 16 Pro, tried but failed. So today I just went ahead and bought the iPhone 17 for the same price. Honestly, I don’t use the telephoto camera much anyway. What I really wanted was better battery, brighter display with less reflection, a stronger chipse…</td>
+            </tr></tbody>
+  </table>
+</div>
+
+<!-- ── Q4 ── -->
+<div class="q-block section">
+  <h2>Q4 — What strategic decisions can be made?</h2>
+
+  <!-- <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+    <div>
+      <h3>📣 Marketing</h3>
+      <p>Lead with your top positive topics in campaigns and social content — those are your proof points users already believe in.</p>
+    </div>
+    <div>
+      <h3>🔧 R&amp;D / Engineering</h3>
+      <p>Prioritise the top complaint topics in the next sprint. Focus on both defect resolution and communication (release notes, support articles).</p>
+    </div>
+    <div>
+      <h3>🎯 Product Roadmap</h3>
+      <p>Features with <strong>high positive rate</strong> → invest to expand. Features with <strong>high negative rate</strong> → fix or deprioritise. Use the Priority Matrix quadrants to guide the roadmap quarterly.</p>
+    </div>
+    <div>
+      <h3>📊 Ongoing Monitoring</h3>
+      <p>Re-run this pipeline weekly. A rising negative % in any topic is an early warning signal before it becomes a PR issue. Track Cohen's Kappa between VADER and RoBERTa over time as a data quality health check.</p>
+    </div>
+  </div>
+
+  <h3 style="margin:16px 0 8px;">Representative positive comments (marketing source material)</h3>
+  <table>
+    <thead><tr><th>Topic</th><th></th><th>Comment</th></tr></thead>
+    <tbody>
+            <tr>
+              <td><span class="tag">Performance & Speed</span></td>
+              <td style="color:#3B8BD4">▲</td>
+              <td>I sold my iphone 14 pro max for car parts. Lived with a cheap android phone in the meantime. Now im back having an iphone with the 16 plus and im loving it so far! Realized im not much of a photographer to warrant having a pro max and honestly while having 120hz is nice. I person…</td>
+            </tr>
+            <tr>
+              <td><span class="tag">Performance & Speed</span></td>
+              <td style="color:#3B8BD4">▲</td>
+              <td>I am still using my 8+. It has been a really good phone and I am not one to keep up with the Jone's. But my battery is getting on the weak side and it is time to either get a new batter that requires a 140 mile round trip to the Apple Store and about $80 of so dollars. When I do …</td>
+            </tr>
+            <tr>
+              <td><span class="tag">Performance & Speed</span></td>
+              <td style="color:#3B8BD4">▲</td>
+              <td>Your review stands out as the absolute BEST compared to the other review videos I’ve seen. The level of detail you’ve provided—from camera shutter lag and image processing to experimenting with the new features—is unparalleled. No other reviewer has dived this deep, and this is e…</td>
+            </tr>
+            <tr>
+              <td><span class="tag">Performance & Speed</span></td>
+              <td style="color:#3B8BD4">▲</td>
+              <td>I made a similar jump from a 12 ProMax and glad I did. The size is perfect. I also thought initially maybe I’d miss the larger screen. I haven’t. The island is great but as a person who used to be an android guy I keep waiting for Apple to have a decent assistant or AI. I use Gem…</td>
+            </tr>
+            <tr>
+              <td><span class="tag">Performance & Speed</span></td>
+              <td style="color:#3B8BD4">▲</td>
+              <td>It’s interesting how preference amongst individuals can deviate our opinions from one another. I love the review and respect your perspectives. I owned the Pixel 9 Pro XL. I switched to the iPhone 16 Pro Max, and personally I like the camera quality/look both in stills and in vid…</td>
+            </tr>
+            <tr>
+              <td><span class="tag">Performance & Speed</span></td>
+              <td style="color:#3B8BD4">▲</td>
+              <td>Hey, I used the iPhone 6 for over 5 years, then the iPhone 11 for 4 years, and now the iPhone 16, which I prefer far more. I never felt like my phone lacked functionality because I didn't know how Android and other phones work. Also, throughout all of my years of using iPhones, I…</td>
+            </tr></tbody>
+  </table>
+</div> -->
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+  <div>
+    <h3>📣 Marketing</h3>
+    <p>
+      Focus campaigns on strong positive drivers such as Camera (48.9%) and Software (42.2%). 
+      These represent validated strengths that users already appreciate.
+    </p>
+  </div>
+
+  <div>
+    <h3>🔧 R&amp;D / Engineering</h3>
+    <p>
+      Prioritise fixing high-negative areas like performance, connectivity, and battery optimization. 
+      Communicate improvements clearly through updates and release notes.
+    </p>
+  </div>
+
+  <div>
+    <h3>🎯 Product Roadmap</h3>
+    <p>
+      Expand features with high positive sentiment while redesigning or deprioritising features 
+      that consistently receive negative feedback (e.g., pricing vs value mismatch).
+    </p>
+  </div>
+
+  <div>
+    <h3>📊 Data & Monitoring</h3>
+    <p>
+      Run the sentiment pipeline regularly to detect early warning signals. 
+      Monitor model agreement (e.g., Cohen’s Kappa) to ensure reliability of insights.
+    </p>
+  </div>
+</div>
+
+<footer>
+  iPhone 16 Sentiment Analysis Pipeline &nbsp;|&nbsp;
+  preprocess_comments.py → sentiment_labeling.py → model_training.py → topic_modeling.py → visualize_report.py
+  &nbsp;|&nbsp; Generated 19 Apr 2026, 03:08
+</footer>
+</body>
+</html>

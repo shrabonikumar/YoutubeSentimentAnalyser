@@ -1,0 +1,135 @@
+# =========================
+# Python
+# =========================
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# =========================
+# Jupyter
+# =========================
+
+.ipynb_checkpoints/
+
+# =========================
+# Data
+# =========================
+
+# CSV / Excel / JSON data
+*.csv
+*.xlsx
+*.xls
+*.json
+*.jsonl
+*.parquet
+*.feather
+*.pkl
+
+# Raw / processed datasets
+data/
+datasets/
+raw_data/
+processed_data/
+
+# =========================
+# Models / ML artifacts
+# =========================
+
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.safetensors
+*.onnx
+
+models/
+checkpoints/
+runs/
+wandb/
+mlruns/
+
+# =========================
+# Generated outputs
+# =========================
+
+outputs/
+results/
+reports/
+
+# Images generated during analysis
+*.png
+*.jpg
+*.jpeg
+*.svg
+
+# =========================
+# Temporary / intermediate
+# =========================
+
+*.tmp
+*.temp
+*.bak
+*.log
+
+tmp/
+temp/
+cache/
+.cache/
+
+# =========================
+# IDE / Editor
+# =========================
+
+.vscode/
+.idea/
+
+# =========================
+# OS
+# =========================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Secrets / Environment
+# =========================
+
+.env
+.env.*
+!.env.example
+
+# API keys / credentials
+*.pem
+*.key
+credentials.json
+secrets.json
+
+# =========================
+# Misc
+# =========================
+
+*.swp
+*.swo
+
+# Generated images
+outputs/
+results/
+*.tmp
+
+# Keep selected project visuals
+# dashboard.png

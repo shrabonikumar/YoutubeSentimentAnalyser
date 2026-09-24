@@ -1,0 +1,24 @@
+Sentiment Analysis of Social Media Content Using Hashtags, Events, or Public Figures
+Collect and analyze text data (tweets/messages/reviews) from any social platform such as:
+•	Twitter (X) 
+•	Instagram 
+•	Reddit 
+•	YouTube 
+ Dataset Collection
+•	Collect at least 500–1000 messages/tweets/comments 
+Choose a specific topic/brand, e.g.: 
+Product (iPhone, Tesla) 
+Service (Zomato, Amazon) 
+Event (Elections, Sports event) 
+Tools: 
+APIs (Twitter API, Reddit API) 
+Web scraping (optional) 
+Manual dataset (if needed) 
+
+Answer the following Question
+•	What is the overall public sentiment? 
+•	What are the key issues or positive drivers? 
+•	How can businesses improve products/services? 
+•	What strategic decisions can be made?
+
+
